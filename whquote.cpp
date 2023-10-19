@@ -7,28 +7,28 @@
 int main(int argc, char **argv){
 
     if(argc < 3){
-        std::cout << "Arguments not provided!" << std::endl;
-        std::cout << "Usage: whquote 2023 5" << std::endl;
+        std::cerr << "Arguments not provided!" << std::endl;
+        std::cerr << "Usage: whquote 2023 5" << std::endl;
         return 1;
     }
     //convert arguments to strings
     std::string strYear = argv[1];
     std::string strMonth = argv[2];
     if(!isdigit(strYear.at(0)) || !isdigit(strMonth.at(0))){
-        std::cout << "Wrong arguments provided!" << std::endl;
-        std::cout << "Usage: whquote 2023 5" << std::endl;
+        std::cerr << "Wrong arguments provided!" << std::endl;
+        std::cerr << "Usage: whquote 2023 5" << std::endl;
         return 1;
     }
 
     long iYear = strtol(strYear.c_str(),nullptr,10);
     long iMonth = strtol(strMonth.c_str(),nullptr,10);
-    //check arguments correctness
-    if(iYear > 2100l || iYear < 2000l){
+    //check arguments limits
+    if(iYear < 2020l|| iYear > 2050  || iMonth < 1l || iMonth > 12l){
+        std::cerr << "Year must be between 2020 and 2050" << std::endl;
+        std::cerr << "Month must be between 1 and 12" << std::endl;
         return 1;
     }
-    if(iMonth < 1l || iMonth > 12l){
-        return 1;
-    }
+
     // CHECK SUNDAYS AND SATHURDAYS
     //INITIALIZATION OF THE tm OBJECT FROM int
     std::tm timeinfo = {0, 0, 0, 1, (int)(iMonth - 1l), (int)(iYear - 1900l)}; // Note: month is 0-based

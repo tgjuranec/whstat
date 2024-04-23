@@ -2,6 +2,7 @@
 #include <chrono>
 
 int daysInMonth[] = {31,28,31,30,31,30,31,31,30,31,30,31};
+int daysInMonth_leapyear[] = {31,29,31,30,31,30,31,31,30,31,30,31};
 
 struct holyday{
     int year;
@@ -31,6 +32,7 @@ const struct holyday holydays_list[] = {
     {2023,4,10},
     {2023,6,8},
     {2024,4,1},
+    {2024,4,17},
     {2024,5,30},
     {2025,4,21},
     {2025,6,19},

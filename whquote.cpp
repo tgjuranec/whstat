@@ -4,6 +4,27 @@
 
 #include "holydays.h"
 
+
+// TEST IF YEAR IS LEAP YEAR
+bool isLeapYear(int year){
+    if(year%4 == 0){
+        if((year % 100) == 0){
+            if(year % 400 == 0){
+                // e.g. 2000, 2400, 1600
+                return true;
+            }
+            else{
+                // e.g. 2100, 2200, 1900
+                return false;
+            }
+        }
+        // e. g. 2016
+        return true;
+    }
+    //e.g. 2017
+    return false;
+}
+
 int main(int argc, char **argv){
 
     if(argc < 3){
@@ -37,8 +58,14 @@ int main(int argc, char **argv){
 
     unsigned int nSunSat = 0, nHolydays = 0;
     unsigned long nonWorkingDays = 0;                         // sum of hours of nonworking days (8*nonworking days)
-    int monthDays = daysInMonth[iMonth-1];
-    for (int i = 0; i < monthDays; i++){
+    unsigned int monthDays;
+    if(isLeapYear(iYear)){
+        monthDays = daysInMonth_leapyear[iMonth-1];
+    }
+    else{
+        monthDays = daysInMonth[iMonth-1];
+    } 
+    for (unsigned int i = 0; i < monthDays; i++){
         //CHECK WEEKDAY
         if(timeinfo.tm_wday == 0 || timeinfo.tm_wday == 6){
             nonWorkingDays += 1;
@@ -78,8 +105,8 @@ int main(int argc, char **argv){
     }  
     
     
-    std::cout << 8*(daysInMonth[iMonth-1] - (int)nonWorkingDays) << ", Sundays&Sathurdays: " << nSunSat 
-            << ", Holydays: " << nHolydays << ", Diff: " << 8*nonWorkingDays - 2*daysInMonth[iMonth-1]<< std::endl;
+    std::cout << 8*(monthDays - nonWorkingDays) << ", Sundays&Sathurdays: " << nSunSat 
+            << ", Holydays: " << nHolydays << ", Diff: " << 8*nonWorkingDays - 2*monthDays<< std::endl;
 
     return 0;
 }

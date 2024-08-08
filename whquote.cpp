@@ -6,7 +6,7 @@
 
 
 // TEST IF YEAR IS LEAP YEAR
-bool isLeapYear(int year){
+bool isLeapYear(unsigned long year){
     if(year%4 == 0){
         if((year % 100) == 0){
             if(year % 400 == 0){
@@ -41,10 +41,10 @@ int main(int argc, char **argv){
         return 1;
     }
 
-    long iYear = strtol(strYear.c_str(),nullptr,10);
-    long iMonth = strtol(strMonth.c_str(),nullptr,10);
+    unsigned long ulYear = strtoul(strYear.c_str(),nullptr,10);
+    unsigned long ulMonth = strtoul(strMonth.c_str(),nullptr,10);
     //check arguments limits
-    if(iYear < 2020l|| iYear > 2050  || iMonth < 1l || iMonth > 12l){
+    if(ulYear < 2020l|| ulYear > 2050  || ulMonth < 1l || ulMonth > 12l){
         std::cerr << "Year must be between 2020 and 2050" << std::endl;
         std::cerr << "Month must be between 1 and 12" << std::endl;
         return 1;
@@ -52,18 +52,19 @@ int main(int argc, char **argv){
 
     // CHECK SUNDAYS AND SATHURDAYS
     //INITIALIZATION OF THE tm OBJECT FROM int
-    std::tm timeinfo = {0, 0, 0, 1, (int)(iMonth - 1l), (int)(iYear - 1900l)}; // Note: month is 0-based
+    std::tm timeinfo = {0, 0, 0, 1, (int)(ulMonth - 1l), (int)(ulYear - 1900ul)}; // Note: month is 0-based
     std::time_t timeinit = std::mktime(&timeinfo);
     timeinfo = *std::localtime(&timeinit);
+    std::cout << timeinfo.tm_gmtoff << timeinfo.tm_zone << timeinfo.tm_wday << std::endl;
 
     unsigned int nSunSat = 0, nHolydays = 0;
     unsigned long nonWorkingDays = 0;                         // sum of hours of nonworking days (8*nonworking days)
     unsigned int monthDays;
-    if(isLeapYear(iYear)){
-        monthDays = daysInMonth_leapyear[iMonth-1];
+    if(isLeapYear(ulYear)){
+        monthDays = daysInMonth_leapyear[ulMonth-1u];
     }
     else{
-        monthDays = daysInMonth[iMonth-1];
+        monthDays = daysInMonth[ulMonth-1u];
     } 
     for (unsigned int i = 0; i < monthDays; i++){
         //CHECK WEEKDAY
@@ -76,17 +77,17 @@ int main(int argc, char **argv){
             unsigned int loopsize = sizeof(holydays_list) / sizeof(holyday);
             for (unsigned int j = 0; j < loopsize; j++){
                 if(holydays_list[j].year == 0){
-                    if(holydays_list[j].month == iMonth && holydays_list[j].day == (i+1)){
+                    if(holydays_list[j].month == ulMonth && holydays_list[j].day == (i+1)){
                         nonWorkingDays += 1;
                         nHolydays++;
                     }
 
                 }
-                else if(holydays_list[j].year < iYear ){
+                else if(holydays_list[j].year < ulYear ){
                     continue;
                 }
-                else if(holydays_list[j].year == iYear){
-                    if(holydays_list[j].month == iMonth && holydays_list[j].day == (i+1)){
+                else if(holydays_list[j].year == ulYear){
+                    if(holydays_list[j].month == ulMonth && holydays_list[j].day == (i+1)){
                         nonWorkingDays += 1;
                         nHolydays++;
                     }

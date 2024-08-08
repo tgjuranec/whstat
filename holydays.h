@@ -1,13 +1,13 @@
 #include <string>
 #include <chrono>
 
-int daysInMonth[] = {31,28,31,30,31,30,31,31,30,31,30,31};
-int daysInMonth_leapyear[] = {31,29,31,30,31,30,31,31,30,31,30,31};
+unsigned int daysInMonth[] = {31,28,31,30,31,30,31,31,30,31,30,31};
+unsigned int daysInMonth_leapyear[] = {31,29,31,30,31,30,31,31,30,31,30,31};
 
 struct holyday{
-    int year;
-    int month;
-    int day;
+    unsigned int year;
+    unsigned int month;
+    unsigned int day;
 };
 
 

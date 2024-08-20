@@ -5,8 +5,7 @@ pipeline {
     stages {
         stage('build') {
             steps {
-		gcc --version
-                g++ -o whstat --static whquote.cpp
+                sh 'g++ -o whstat --static whquote.cpp'
             }
         }
     }
